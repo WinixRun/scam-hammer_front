@@ -1,0 +1,55 @@
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const formBusqueda = document.getElementById('form-busqueda');
+
+    formBusqueda.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      const form = event.target;
+      if (!(form instanceof HTMLFormElement)) {
+        console.error('Target is not a form element');
+        return;
+      }
+
+      const formData = new FormData(form);
+      const query = formData.get('search').toString();
+
+      // Emitir un evento personalizado con la consulta de búsqueda
+      const searchEvent = new CustomEvent('search', { detail: { query } });
+      document.dispatchEvent(searchEvent);
+    });
+  });
+</script>
+
+<div id='buscador' class='space-y-4'>
+  <form id='form-busqueda'>
+    <div>
+      <label
+        for='search'
+        class='block text-sm mb-4 text-center text-white font-bold'
+      >
+        Buscador de mensajes maliciosos
+      </label>
+      <input
+        type='text'
+        id='search'
+        name='search'
+        class='mt-1 block w-full h-12 border-gray-600 bg-gray-700 mb-2 text-white p-4 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm'
+        placeholder='Número de teléfono, enlace o texto del mensaje'
+        required
+      />
+    </div>
+    <button
+      type='submit'
+      class='w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gradient-primary hover:bg-primaryHover transition duration-500 ease-in-out transform hover:scale-105'
+    >
+      Buscar
+    </button>
+  </form>
+</div>
+
+<style>
+  .bg-gradient-primary {
+    background: linear-gradient(90deg, #2cb3d9, #0582c0);
+  }
+</style>

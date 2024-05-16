@@ -1,0 +1,140 @@
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const resultadosContainer = document.getElementById('resultados-row');
+    const modal = document.getElementById('modal');
+    const modalContent = document.getElementById('modal-content');
+    const closeModalButton = document.getElementById('close-modal-button');
+
+    const showModal = (resultado) => {
+      modalContent.innerHTML = `
+        <p class="text-white"><i class="fas fa-phone-alt text-[#56e0ff]"></i> <strong>Teléfono:</strong> ${resultado.telefono}</p>
+        <p class="text-white"><i class="fas fa-link text-[#56e0ff]"></i> <strong>Enlace:</strong> ${resultado.enlace}</p>
+        <p class="text-white"><i class="fas fa-align-left text-[#56e0ff]"></i> <strong>Texto:</strong> ${resultado.texto}</p>
+        <p class="text-white"><i class="fas fa-sort-numeric-up-alt text-[#56e0ff]"></i> <strong>Cantidad:</strong> ${resultado.cantidad}</p>
+        <p class="text-white"><i class="fas fa-server text-[#56e0ff]"></i> <strong>Estado del dominio:</strong> <span class="inline-block w-3 h-3 rounded-full ${resultado.statusColor} ${resultado.statusShadow}"></span> ${resultado.statusText}</p>
+      `;
+      modal.classList.remove('hidden');
+    };
+
+    closeModalButton.addEventListener('click', () => {
+      modal.classList.add('hidden');
+    });
+
+    document.addEventListener('search', async (event) => {
+      if (!(event instanceof CustomEvent)) {
+        console.error('Event is not a CustomEvent');
+        return;
+      }
+
+      const { query } = event.detail;
+      resultadosContainer.innerHTML = `
+        <div class="flex justify-center items-center min-h-[250px]">
+          <l-cardio size="50" stroke="4" speed="2" color="white"></l-cardio>
+        </div>
+      `;
+
+      try {
+        await new Promise((resolve) => setTimeout(resolve, 1000)); // Forzar 1s de carga
+
+        const response = await fetch(
+          `http://localhost:3000/api/reports/search?query=${encodeURIComponent(query)}`,
+          {
+            method: 'GET',
+            credentials: 'include',
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const resultados = await response.json();
+
+        const checkDomainStatus = async (domain) => {
+          try {
+            const res = await fetch(
+              `http://localhost:3000/api/check-domain?domain=${encodeURIComponent(domain)}`
+            );
+            const data = await res.json();
+            return data.status;
+          } catch {
+            return 'down';
+          }
+        };
+
+        const resultadosHTML = await Promise.all(
+          resultados.map(async (resultado) => {
+            const status = await checkDomainStatus(resultado.enlace);
+            const statusColor = status === 'up' ? 'bg-green-500' : 'bg-red-500';
+            const statusShadow =
+              status === 'up' ? 'shadow-neon-green' : 'shadow-neon-red';
+            const statusText = status === 'up' ? 'Up' : 'Down';
+
+            return `
+            <div class="bg-gray-700 p-4 rounded-md shadow-md">
+              <p class="text-white">
+               <i class="fas fa-phone-alt text-[#56e0ff]"></i> <strong>Teléfono:</strong> ${resultado.telefono}
+                </p>
+  <p class="text-white">
+    <i class="fas fa-link text-[#56e0ff]"></i> <strong>Enlace:</strong> ${resultado.enlace}
+  </p>
+  <p class="text-white">
+    <i class="fas fa-server text-[#56e0ff]"></i> <strong>Estado del dominio:</strong>
+    <span class="inline-block w-3 h-3 rounded-full ${status === 'up' ? 'bg-green-500 shadow-[0_0_10px_#48bb78,0_0_20px_#48bb78,0_0_30px_#48bb78]' : 'bg-red-500 shadow-[0_0_10px_#f56565,0_0_20px_#f56565,0_0_30px_#f56565]'} animate-pulse"></span> ${statusText}
+  </p>
+  <button class="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gradient-to-r from-[#2cb3d9] to-[#0582c0] hover:bg-primaryHover transition duration-500 ease-in-out transform hover:scale-105" data-resultado='${JSON.stringify({ ...resultado, statusColor, statusText })}'>Ver detalles</button>
+</div>
+
+            `;
+          })
+        );
+
+        resultadosContainer.innerHTML = `
+          <div class="text-white mb-4">Mostrando ${resultados.length} resultados</div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 min-h-[250px] mx-auto">
+            ${resultadosHTML.join('')}
+          </div>
+        `;
+
+        document.querySelectorAll('[data-resultado]').forEach((button) => {
+          button.addEventListener('click', () => {
+            const resultado = JSON.parse(button.getAttribute('data-resultado'));
+            showModal(resultado);
+          });
+        });
+      } catch (error) {
+        console.error('Error al buscar los reportes:', error);
+        resultadosContainer.innerHTML = `<div class="flex justify-center items-center min-h-[250px]"><p class="text-lg text-white">Hubo un problema al realizar la búsqueda.</p></div>`;
+      }
+    });
+  });
+</script>
+
+<div id='resultados-row' class='w-full mx-auto'>
+  <!-- Los resultados aparecerán aquí -->
+</div>
+
+<!-- Modal -->
+<div id='modal' class='hidden fixed z-10 inset-0 overflow-y-auto'>
+  <div class='flex items-center justify-center min-h-screen'>
+    <div class='fixed inset-0 bg-gray-800 bg-opacity-75 transition-opacity'>
+    </div>
+    <div
+      class='bg-gray-900 rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full'
+    >
+      <div class='p-6'>
+        <div id='modal-content' class='space-y-4'>
+          <!-- Los detalles del reporte se mostrarán aquí -->
+        </div>
+        <div class='mt-4'>
+          <button
+            id='close-modal-button'
+            class='w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 transition duration-500 ease-in-out transform hover:scale-105'
+          >
+            Cerrar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
