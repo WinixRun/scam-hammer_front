@@ -1,5 +1,4 @@
-# Dockerfile.frontend
-FROM node:14
+FROM node:22
 
 WORKDIR /app
 
@@ -13,6 +12,6 @@ RUN npm run build
 
 RUN npm install -g serve
 
-EXPOSE 5000
+EXPOSE 4321
 
-CMD ["serve", "-s", "build"]
+CMD ["serve", "-s", "dist", "-l", "4321"]
