@@ -95,16 +95,15 @@ import Confirmacion from '../components/Confirmacion.astro';
 </style>
 <script>
   document.addEventListener('DOMContentLoaded', async function () {
-    const { cardio } = await import('ldrs'); // Importar la librería de loaders
-    cardio.register(); // Registrar el loader
-
+    const { cardio } = await import('ldrs');
+    cardio.register();
     let csrfToken = '';
 
     const fetchCSRFToken = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/csrf-token', {
+        const response = await fetch('/api/csrf-token', {
           method: 'GET',
-          credentials: 'include', // Incluye las cookies en la solicitud
+          credentials: 'include',
         });
 
         if (!response.ok) {
