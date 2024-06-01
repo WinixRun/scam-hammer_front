@@ -195,7 +195,7 @@ import Confirmacion from '../components/Confirmacion.astro';
           await delay(1000);
 
           console.log('Realizando solicitud de reporte'); // Depuración
-          const response = await fetch('http://backend:3000/api/reports', {
+          const response = await fetch('/api/reports', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
