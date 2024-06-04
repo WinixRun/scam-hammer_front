@@ -1,54 +1,60 @@
 <form id='form-reporte' class='space-y-4 animate-fade-up'>
   <div id='mensaje' class='hidden p-4 rounded-md text-white'></div>
-  <div>
-    <label for='telefono' class='block text-sm font-medium text-white'
-      >Número de Teléfono</label
-    >
-    <input
-      type='tel'
-      id='telefono'
-      name='telefono'
-      class='mt-1 block w-full h-12 border-gray-600 bg-gray-700 p-4 text-white rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm'
-      maxlength='20'
-      required
-    />
-  </div>
-  <div>
-    <label for='enlace' class='block text-sm font-medium text-white'
-      >Enlace de Phishing</label
-    >
-    <input
-      type='url'
-      id='enlace'
-      name='enlace'
-      class='mt-1 block w-full h-12 border-gray-600 bg-gray-700 p-4 text-white rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm'
-      required
-    />
-  </div>
-  <div>
-    <label for='texto' class='block text-sm font-medium text-white'
-      >Texto del SMS</label
-    >
-    <textarea
-      id='texto'
-      name='texto'
-      class='mt-1 block w-full h-24 border-gray-600 bg-gray-700 p-4 text-white rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm'
-      required></textarea>
-  </div>
-  <button
-    type='submit'
-    class='w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gradient-primary hover:bg-primaryHover transition duration-500 ease-in-out transform hover:scale-105'
-  >
-    Reportar
-  </button>
-  <button
-    type='button'
-    id='volver-buscador'
-    class='w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primaryHover transition duration-500 ease-in-out transform hover:scale-105'
-  >
-    Volver al Buscador
-  </button>
+  <p class='block text-sm font-medium text-white'>
+    Por favor, reporte solo mensajes recibidos en los <span
+      class='font-semibold'>últimos 3 días.</span
+    > De esta forma nos resultará mas sencillo hacer frente a amenazas en curso.
+  </p>
 </form>
+<br />
+<div>
+  <label for='telefono' class='block text-sm font-medium text-white'
+    >Número de Teléfono</label
+  >
+  <input
+    type='tel'
+    id='telefono'
+    name='telefono'
+    class='mt-1 mb-4 block w-full h-12 border-gray-600 bg-gray-700 p-4 text-white rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm'
+    maxlength='20'
+    required
+  />
+</div>
+<div>
+  <label for='enlace' class='block text-sm font-medium text-white'
+    >Enlace de Phishing</label
+  >
+  <input
+    type='url'
+    id='enlace'
+    name='enlace'
+    class='mt-1 mb-4 block w-full h-12 border-gray-600 bg-gray-700 p-4 text-white rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm'
+    required
+  />
+</div>
+<div>
+  <label for='texto' class='block text-sm font-medium text-white'
+    >Texto del SMS</label
+  >
+  <textarea
+    id='texto'
+    name='texto'
+    class='mt-1 mb-4 block w-full h-24 border-gray-600 bg-gray-700 p-4 text-white rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm'
+    required></textarea>
+</div>
+<button
+  type='submit'
+  class='w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gradient-primary hover:bg-primaryHover transition duration-500 ease-in-out transform hover:scale-105'
+>
+  Reportar
+</button>
+<button
+  type='button'
+  id='volver-buscador'
+  class='w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primaryHover transition duration-500 ease-in-out transform hover:scale-105'
+>
+  Volver al Buscador
+</button>
 
 <style>
   .bg-gradient-primary {
@@ -183,7 +189,8 @@
         } catch (error) {
           console.error('Error al enviar el reporte:', error); // Depuración
           loaderContainer.classList.add('hidden');
-          mensaje.textContent = 'Hubo un problema al enviar el reporte';
+          mensaje.textContent =
+            'Hubo un problema al enviar el reporte. Pruebe en unos minutos';
           mensaje.className = 'p-4 mb-4 rounded-md text-red-600 bg-red-100';
           mensaje.classList.remove('hidden');
           formularioContainer.classList.remove('hidden');
