@@ -4,9 +4,12 @@ import FormularioReporte from '../components/FormularioReporte.astro';
 import Buscador from '../components/Buscador.astro';
 import Resultados from '../components/Resultados.astro';
 import Confirmacion from '../components/Confirmacion.astro';
+import Cookies from '../components/Cookies.astro'; // Importa el componente de cookies
 ---
 
-<Layout title='Bienvenido a Scamhammer.'>
+<Layout title='Bienvenido a Scam-Hammer.'>
+  <Cookies />
+  <!-- Incluye el componente de cookies -->
   <main
     class='flex flex-col items-center justify-center min-h-screen max-w-7xl mx-auto px-4 py-4 space-y-8'
   >
@@ -18,26 +21,26 @@ import Confirmacion from '../components/Confirmacion.astro';
           SCAM HAMMER <i class='fas fa-gavel'></i>
         </h1>
         <p class='text-sm text-white mb-6'>
-          Scamlist está diseñada para combatir campañas de mensajes fraudulentos
-          recopilando información sobre ellos.
-          <span class='text-[#56e0ff]'
-            >Aquí puedes reportar y verificar SMS sospechosos</span
-          > para contribuir a nuestra base de datos.
+          Scam Hammer está diseñada para combatir campañas de mensajes
+          fraudulentos recopilando información sobre ellos.
+          <span class='text-[#56e0ff]'>
+            Aquí puedes reportar y verificar SMS sospechosos
+          </span> para contribuir a nuestra base de datos.
         </p>
         <p class='text-sm text-white'>
           <span class='text-[#56e0ff] font-bold'>AVISO IMPORTANTE:</span> La función
           de búsqueda no debe ser tomada como un verificador de mensajes legítimos
           en ningún caso.
-          <span class='text-[#56e0ff] font-semibold'
-            >Trata todos los mensajes desconocidos como potencialmente
-            fraudulentos.</span
-          >
+          <span class='text-[#56e0ff] font-semibold'>
+            Trata todos los mensajes desconocidos como potencialmente
+            fraudulentos.
+          </span>
         </p>
       </div>
       <div class='md:w-1/2 animate-fade-left'>
         <div
           id='buscador-container'
-          class='card bg-gray-800 p-6 rounded-lg shadow-lg mb-4 animate-fade-left'
+          class='relative card bg-gray-800 p-6 rounded-lg shadow-lg mb-4 animate-fade-left hover:border-gradient'
         >
           <Buscador />
           <div class='text-center mt-4'>
@@ -51,7 +54,7 @@ import Confirmacion from '../components/Confirmacion.astro';
         </div>
         <div
           id='formulario-container'
-          class='hidden card bg-gray-800 p-6 rounded-lg shadow-lg animate-fade-up'
+          class='relative hidden card bg-gray-800 p-6 rounded-lg shadow-lg animate-fade-up hover:border-gradient'
         >
           <FormularioReporte />
         </div>
@@ -93,5 +96,17 @@ import Confirmacion from '../components/Confirmacion.astro';
   }
   .bg-gradient-primary {
     background: linear-gradient(90deg, #2cb3d9, #0582c0);
+  }
+  .border-gradient::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    bottom: -4px;
+    background: linear-gradient(90deg, #2cb3d9, #0582c0);
+    border-radius: inherit;
+    z-index: -1;
+    animation: spinGradient 3s linear infinite;
   }
 </style>

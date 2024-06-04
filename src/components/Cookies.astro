@@ -1,0 +1,45 @@
+---
+
+---
+
+<div
+  id='cookieConsent'
+  class='fixed bottom-0 left-0 right-0 bg-gray-800 p-4 text-white flex justify-between items-center z-50'
+>
+  <div>
+    <span
+      >Utilizamos cookies para mejorar su experiencia en nuestra web. Al
+      continuar navegando, acepta el uso de cookies.</span
+    >
+    <a href='/cookiePage' class='underline ml-2'>Más información</a>
+  </div>
+  <button
+    id='acceptCookies'
+    class='bg-primary text-white py-2 px-4 rounded ml-4 hover:bg-primaryHover transition duration-500 ease-in-out transform hover:scale-105'
+  >
+    Aceptar
+  </button>
+</div>
+
+<style>
+  #cookieConsent {
+    display: none;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const cookieConsent = document.getElementById('cookieConsent');
+    const acceptCookies = document.getElementById('acceptCookies');
+
+    const hasConsented = localStorage.getItem('cookieConsent');
+    if (!hasConsented) {
+      cookieConsent.style.display = 'flex';
+    }
+
+    acceptCookies.addEventListener('click', () => {
+      localStorage.setItem('cookieConsent', 'true');
+      cookieConsent.style.display = 'none';
+    });
+  });
+</script>
