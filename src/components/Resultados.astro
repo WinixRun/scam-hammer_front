@@ -51,7 +51,6 @@
 
             const response = await fetch(
               `/api/reports/search?query=${encodeURIComponent(query)}`,
-
               {
                 method: 'GET',
                 credentials: 'include',
@@ -88,11 +87,11 @@
                 return `
                 <div class="bg-gray-700 p-4 rounded-md shadow-md ">
                   <p class="text-white">
-                   <i class="fas fa-phone-alt text-[#56e0ff]"></i> <strong>Teléfono:</strong><br> ${resultado.telefono}
+                    <i class="fas fa-phone-alt text-[#56e0ff]"></i> <strong>Teléfono:</strong><br> ${resultado.telefono}
                   </p>
                   <p class="text-white">
                     <i class="fas fa-link text-[#56e0ff]"></i> <strong>Enlace:</strong><br> 
-                    <span class="truncate" title="${resultado.enlace}">${resultado.enlace}</span>
+                    <button class="truncate copiar-enlace-btn" title="${resultado.enlace}">Copiar enlace</button>
                   </p>
                   <p class="text-white">
                     <i class="fas fa-server text-[#56e0ff]"></i> <strong>Estado del dominio:<br></strong>
@@ -120,19 +119,21 @@
               });
             });
 
-            document.querySelectorAll('.truncate').forEach((element) => {
-              element.addEventListener('click', () => {
-                const textToCopy = element.getAttribute('title');
-                navigator.clipboard.writeText(textToCopy).then(
-                  () => {
-                    alert('Enlace copiado al portapapeles');
-                  },
-                  () => {
-                    alert('Error al copiar el enlace');
-                  }
-                );
+            document
+              .querySelectorAll('.copiar-enlace-btn')
+              .forEach((button) => {
+                button.addEventListener('click', () => {
+                  const textToCopy = button.getAttribute('title');
+                  navigator.clipboard.writeText(textToCopy).then(
+                    () => {
+                      alert('Enlace copiado al portapapeles');
+                    },
+                    () => {
+                      alert('Error al copiar el enlace');
+                    }
+                  );
+                });
               });
-            });
           } catch (error) {
             console.error('Error al buscar los reportes:', error);
             resultadosContainer.innerHTML = `<div class="flex justify-center items-center min-h-[250px]"><p class="text-lg text-white">Hubo un problema al realizar la búsqueda.</p></div>`;
