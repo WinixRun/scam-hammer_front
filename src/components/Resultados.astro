@@ -19,15 +19,20 @@
         const closeModalButton = document.getElementById('close-modal-button');
 
         const showModal = (resultado) => {
-          const relatedDomains = resultado.relatedDomains.join('<br>');
+          const relatedDomains = resultado.dominiosRelacionados.length
+            ? resultado.dominiosRelacionados
+                .map((domain) => `<p>${domain}</p>`)
+                .join('')
+            : 'De momento no hay dominios relacionados';
+
           modalContent.innerHTML = `
-          <p class="text-white"><i class="fas fa-phone-alt text-[#56e0ff]"></i> <strong>Teléfono:</strong> ${resultado.telefono}</p>
-          <p class="text-white"><i class="fas fa-link text-[#56e0ff]"></i> <strong>Enlace:</strong> ${resultado.enlace}</p>
-          <p class="text-white"><i class="fas fa-align-left text-[#56e0ff]"></i> <strong>Texto:</strong> ${resultado.texto}</p>
-          <p class="text-white"><i class="fas fa-sort-numeric-up-alt text-[#56e0ff]"></i> <strong>Cantidad:</strong> ${resultado.cantidad}</p>
-          <p class="text-white"><i class="fas fa-server text-[#56e0ff]"></i> <strong>Estado del dominio:</strong> <span class="inline-block w-3 h-3 rounded-full ${resultado.statusColor} ${resultado.statusShadow}"></span> ${resultado.statusText}</p>
-          <p class="text-white"><i class="fas fa-link text-[#56e0ff]"></i> <strong>Dominios relacionados:</strong><br> ${relatedDomains}</p>
-        `;
+            <p class="text-white"><i class="fas fa-phone-alt text-[#56e0ff]"></i> <strong>Teléfono:</strong> ${resultado.telefono}</p>
+            <p class="text-white"><i class="fas fa-link text-[#56e0ff]"></i> <strong>Enlace:</strong> ${resultado.enlace}</p>
+            <p class="text-white"><i class="fas fa-align-left text-[#56e0ff]"></i> <strong>Texto:</strong> ${resultado.texto}</p>
+            <p class="text-white"><i class="fas fa-sort-numeric-up-alt text-[#56e0ff]"></i> <strong>Cantidad:</strong> ${resultado.cantidad}</p>
+            <p class="text-white"><i class="fas fa-server text-[#56e0ff]"></i> <strong>Estado del dominio:</strong> <span class="inline-block w-3 h-3 rounded-full ${resultado.statusColor} ${resultado.statusShadow}"></span> ${resultado.statusText}</p>
+            <p class="text-white"><i class="fas fa-link text-[#56e0ff]"></i> <strong>Dominios relacionados:</strong> ${relatedDomains}</p>
+          `;
           modal.classList.remove('hidden');
         };
 
@@ -43,10 +48,10 @@
 
           const { query } = event.detail;
           resultadosContainer.innerHTML = `
-          <div class="flex justify-center items-center min-h-[250px]">
-            <l-cardio size="50" stroke="4" speed="2" color="white"></l-cardio>
-          </div>
-        `;
+            <div class="flex justify-center items-center min-h-[250px]">
+              <l-cardio size="50" stroke="4" speed="2" color="white"></l-cardio>
+            </div>
+          `;
 
           try {
             await new Promise((resolve) => setTimeout(resolve, 1000)); // Forzar 1s de carga
