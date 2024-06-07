@@ -20,12 +20,13 @@
 
         const showModal = (resultado) => {
           modalContent.innerHTML = `
-          <p class="text-white"><i class="fas fa-phone-alt text-[#56e0ff]"></i> <strong>Teléfono:</strong> ${resultado.telefono}</p>
-          <p class="text-white"><i class="fas fa-link text-[#56e0ff]"></i> <strong>Enlace:</strong> ${resultado.enlace}</p>
-          <p class="text-white"><i class="fas fa-align-left text-[#56e0ff]"></i> <strong>Texto:</strong> ${resultado.texto}</p>
-          <p class="text-white"><i class="fas fa-sort-numeric-up-alt text-[#56e0ff]"></i> <strong>Cantidad:</strong> ${resultado.cantidad}</p>
-          <p class="text-white"><i class="fas fa-server text-[#56e0ff]"></i> <strong>Estado del dominio:</strong> <span class="inline-block w-3 h-3 rounded-full ${resultado.statusColor} ${resultado.statusShadow}"></span> ${resultado.statusText}</p>
-        `;
+            <p class="text-white"><i class="fas fa-phone-alt text-[#56e0ff]"></i> <strong>Teléfono:</strong> ${resultado.telefono}</p>
+            <p class="text-white"><i class="fas fa-link text-[#56e0ff]"></i> <strong>Enlace:</strong> ${resultado.enlace}</p>
+            <p class="text-white"><i class="fas fa-align-left text-[#56e0ff]"></i> <strong>Texto:</strong> ${resultado.texto}</p>
+            <p class="text-white"><i class="fas fa-sort-numeric-up-alt text-[#56e0ff]"></i> <strong>Cantidad:</strong> ${resultado.cantidad}</p>
+            <p class="text-white"><i class="fas fa-server text-[#56e0ff]"></i> <strong>Estado del dominio:</strong> <span class="inline-block w-3 h-3 rounded-full ${resultado.statusColor} ${resultado.statusShadow}"></span> ${resultado.statusText}</p>
+            <p class="text-white"><i class="fas fa-link text-[#56e0ff]"></i> <strong>Dominios relacionados:</strong> ${resultado.dominiosRelacionados.join(', ')}</p>
+          `;
           modal.classList.remove('hidden');
         };
 
@@ -41,10 +42,10 @@
 
           const { query } = event.detail;
           resultadosContainer.innerHTML = `
-          <div class="flex justify-center items-center min-h-[250px]">
-            <l-cardio size="50" stroke="4" speed="2" color="white"></l-cardio>
-          </div>
-        `;
+            <div class="flex justify-center items-center min-h-[250px]">
+              <l-cardio size="50" stroke="4" speed="2" color="white"></l-cardio>
+            </div>
+          `;
 
           try {
             await new Promise((resolve) => setTimeout(resolve, 1000)); // Forzar 1s de carga
@@ -97,7 +98,7 @@
                     <i class="fas fa-server text-[#56e0ff]"></i> <strong>Estado del dominio:<br></strong>
                     <span class="inline-block w-3 h-3 rounded-full ${status === 'up' ? 'bg-green-500 shadow-[0_0_10px_#48bb78,0_0_20px_#48bb78,0_0_30px_#48bb78]' : 'bg-red-500 shadow-[0_0_10px_#f56565,0_0_20px_#f56565,0_0_30px_#f56565]'} animate-pulse"></span> ${statusText}
                   </p>
-                  <button class="w-full py-2 px-4 border border-transparent mt-6 rounded-md shadow-sm text-sm font-medium text-white bg-gradient-to-r from-[#2cb3d9] to-[#0582c0] hover:bg-primaryHover transition duration-500 ease-in-out transform hover:scale-105" data-resultado='${JSON.stringify({ ...resultado, statusColor, statusText })}'>Ver detalles</button>
+                  <button class="w-full py-2 px-4 border border-transparent mt-6 rounded-md shadow-sm text-sm font-medium text-white bg-gradient-to-r from-[#2cb3d9] to-[#0582c0] hover:bg-primaryHover transition duration-500 ease-in-out transform hover:scale-105" data-resultado='${JSON.stringify({ ...resultado, statusColor, statusText, dominiosRelacionados: resultado.dominiosRelacionados })}'>Ver detalles</button>
                 </div>
               `;
               })
