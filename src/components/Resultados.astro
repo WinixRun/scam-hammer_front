@@ -19,11 +19,13 @@
         const closeModalButton = document.getElementById('close-modal-button');
 
         const showModal = (resultado) => {
-          const relatedDomains = resultado.dominiosRelacionados.length
-            ? resultado.dominiosRelacionados
-                .map((domain) => `<p>${domain}</p>`)
-                .join('')
-            : 'De momento no hay dominios relacionados';
+          const relatedDomains =
+            Array.isArray(resultado.dominiosRelacionados) &&
+            resultado.dominiosRelacionados.length
+              ? resultado.dominiosRelacionados
+                  .map((domain) => `<p>${domain}</p>`)
+                  .join('')
+              : 'De momento no hay dominios relacionados';
 
           modalContent.innerHTML = `
             <p class="text-white"><i class="fas fa-phone-alt text-[#56e0ff]"></i> <strong>Teléfono:</strong> ${resultado.telefono}</p>
