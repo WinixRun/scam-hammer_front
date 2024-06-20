@@ -99,7 +99,7 @@
     if (form instanceof HTMLFormElement) {
       form.addEventListener('submit', async function (event) {
         event.preventDefault();
-        console.log('Formulario enviado'); // Depuración
+        console.log('Formulario enviado'); // Debugging
         const formData = new FormData(form);
         const telefono = formData.get('telefono').toString();
         const enlace = formData.get('enlace').toString();
@@ -121,8 +121,8 @@
             new Promise((resolve) => setTimeout(resolve, ms));
           await delay(1000);
 
-          console.log('Realizando solicitud de reporte'); // Depuración
-          const response = await fetch('/api/reports', {
+          console.log('Realizando solicitud de reporte'); // Debugging
+          const response = await fetch('http://127.0.0.1:3000/api/reports', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -133,23 +133,24 @@
 
           const responseData = await response.json();
           loaderContainer.classList.add('hidden');
+          console.log('Response data:', responseData); // Debugging
 
           if (response.ok) {
-            console.log('Reporte enviado exitosamente'); // Depuración
+            console.log('Reporte enviado exitosamente'); // Debugging
             confirmacionContainer.classList.remove('hidden');
             mensaje.classList.add('hidden');
           } else {
             console.error(
               'Error en la respuesta del servidor:',
               responseData.message
-            ); // Depuración
+            ); // Debugging
             mensaje.textContent = `Error: ${responseData.message}`;
             mensaje.className = 'p-4 mb-4 rounded-md text-red-600 bg-red-100';
             mensaje.classList.remove('hidden');
             formularioContainer.classList.remove('hidden');
           }
         } catch (error) {
-          console.error('Error al enviar el reporte:', error); // Depuración
+          console.error('Error al enviar el reporte:', error); // Debugging
           loaderContainer.classList.add('hidden');
           mensaje.textContent = 'Hubo un problema al enviar el reporte';
           mensaje.className = 'p-4 mb-4 rounded-md text-red-600 bg-red-100';
