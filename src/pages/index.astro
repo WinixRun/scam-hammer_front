@@ -4,85 +4,82 @@ import FormularioReporte from '../components/FormularioReporte.astro';
 import Buscador from '../components/Buscador.astro';
 import Resultados from '../components/Resultados.astro';
 import Confirmacion from '../components/Confirmacion.astro';
-import Cookies from '../components/Cookies.astro';
-import TriangleVideo from '../components/TriangleVideo.astro';
+import Cookies from '../components/Cookies.astro'; // Importa el componente de cookies
 ---
 
 <Layout title='Bienvenido a Scam-Hammer.'>
   <Cookies />
-  <div class='relative w-full'>
-    <TriangleVideo />
-    <main
-      class='relative flex flex-col items-center justify-center min-h-screen max-w-7xl mx-auto px-4 py-4 space-y-8 z-20'
+  <!-- Incluye el componente de cookies -->
+  <main
+    class='flex flex-col items-center justify-center min-h-screen max-w-7xl mx-auto px-4 py-4 space-y-8'
+  >
+    <div
+      class='md:flex md:flex-row md:items-center md:justify-center w-full animate-fade-right'
     >
-      <div
-        class='md:flex md:flex-row md:items-center md:justify-center w-full animate-fade-right'
-      >
-        <div class='md:w-1/2 pr-4 mr-6 mb-8 md:mb-0 text-center'>
-          <h1 class='text-4xl font-bold mb-2 text-gradient'>
-            SCAM HAMMER <i class='fas fa-gavel'></i>
-          </h1>
-          <p class='text-sm text-white mb-6'>
-            Scam Hammer está diseñada para combatir campañas de mensajes
-            fraudulentos recopilando información sobre ellos.
-            <span class='text-[#56e0ff]'>
-              Aquí puedes reportar y verificar SMS sospechosos
-            </span> para contribuir a nuestra base de datos.
-          </p>
-          <p class='text-sm text-white'>
-            <span class='text-[#56e0ff] font-bold'>AVISO IMPORTANTE:</span> La función
-            de búsqueda no debe ser tomada como un verificador de mensajes legítimos
-            en ningún caso.
-            <span class='text-[#56e0ff] font-semibold'>
-              Trata todos los mensajes desconocidos como potencialmente
-              fraudulentos.
-            </span>
-          </p>
-        </div>
-        <div class='md:w-1/2 animate-fade-left'>
-          <div
-            id='buscador-container'
-            class='relative card bg-gray-800 p-6 rounded-lg shadow-lg mb-4 animate-fade-left hover:border-gradient z-30'
-          >
-            <Buscador />
-            <div class='text-center mt-4'>
-              <button
-                id='reportar-button'
-                class='py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primaryHover transition duration-500 ease-in-out transform hover:scale-105'
-              >
-                Reportar SMS fraudulento
-              </button>
-            </div>
-          </div>
-          <div
-            id='formulario-container'
-            class='relative hidden card bg-gray-800 p-6 rounded-lg shadow-lg animate-fade-up hover:border-gradient z-30'
-          >
-            <FormularioReporte />
-          </div>
-          <div
-            id='loader-container'
-            class='hidden card bg-gray-800 p-6 rounded-lg shadow-lg animate-fade-up text-center z-30'
-          >
-            <div id='loader'></div>
-          </div>
-          <div
-            id='confirmacion-container'
-            class='hidden card bg-gray-800 p-6 rounded-lg shadow-lg animate-fade-up text-center z-30'
-          >
-            <Confirmacion />
+      <div class='md:w-1/2 pr-4 mr-6 mb-8 md:mb-0 text-center'>
+        <h1 class='text-4xl font-bold mb-2 text-gradient'>
+          SCAM HAMMER <i class='fas fa-gavel'></i>
+        </h1>
+        <p class='text-sm text-white mb-6'>
+          Scam Hammer está diseñada para combatir campañas de mensajes
+          fraudulentos recopilando información sobre ellos.
+          <span class='text-[#56e0ff]'>
+            Aquí puedes reportar y verificar SMS sospechosos
+          </span> para contribuir a nuestra base de datos.
+        </p>
+        <p class='text-sm text-white'>
+          <span class='text-[#56e0ff] font-bold'>AVISO IMPORTANTE:</span> La función
+          de búsqueda no debe ser tomada como un verificador de mensajes legítimos
+          en ningún caso.
+          <span class='text-[#56e0ff] font-semibold'>
+            Trata todos los mensajes desconocidos como potencialmente
+            fraudulentos.
+          </span>
+        </p>
+      </div>
+      <div class='md:w-1/2 animate-fade-left'>
+        <div
+          id='buscador-container'
+          class='relative card bg-gray-800 p-6 rounded-lg shadow-lg mb-4 animate-fade-left hover:border-gradient'
+        >
+          <Buscador />
+          <div class='text-center mt-4'>
             <button
-              id='volver-inicio'
-              class='w-full py-2 px-4 mt-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primaryHover transition duration-500 ease-in-out transform hover:scale-105'
+              id='reportar-button'
+              class='py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primaryHover transition duration-500 ease-in-out transform hover:scale-105'
             >
-              Volver al Inicio
+              Reportar SMS fraudulento
             </button>
           </div>
         </div>
+        <div
+          id='formulario-container'
+          class='relative hidden card bg-gray-800 p-6 rounded-lg shadow-lg animate-fade-up hover:border-gradient'
+        >
+          <FormularioReporte />
+        </div>
+        <div
+          id='loader-container'
+          class='hidden card bg-gray-800 p-6 rounded-lg shadow-lg animate-fade-up text-center'
+        >
+          <div id='loader'></div>
+        </div>
+        <div
+          id='confirmacion-container'
+          class='hidden card bg-gray-800 p-6 rounded-lg shadow-lg animate-fade-up text-center'
+        >
+          <Confirmacion />
+          <button
+            id='volver-inicio'
+            class='w-full py-2 px-4 mt-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primaryHover transition duration-500 ease-in-out transform hover:scale-105'
+          >
+            Volver al Inicio
+          </button>
+        </div>
       </div>
-      <Resultados />
-    </main>
-  </div>
+    </div>
+    <Resultados />
+  </main>
 </Layout>
 
 <style>
