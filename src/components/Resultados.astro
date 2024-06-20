@@ -59,7 +59,7 @@
             await new Promise((resolve) => setTimeout(resolve, 1000)); // Forzar 1s de carga
 
             const response = await fetch(
-              `http://127.0.0.1:3000/api/reports/search?query=${encodeURIComponent(query)}`,
+              `/api/reports/search?query=${encodeURIComponent(query)}`,
               {
                 method: 'GET',
                 credentials: 'include',
@@ -75,7 +75,7 @@
             const checkDomainStatus = async (domain) => {
               try {
                 const res = await fetch(
-                  `http://127.0.0.1:3000/api/check-domain?domain=${encodeURIComponent(domain)}`
+                  `/api/check-domain?domain=${encodeURIComponent(domain)}`
                 );
                 const data = await res.json();
                 return data.status;
