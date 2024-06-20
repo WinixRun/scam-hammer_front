@@ -59,11 +59,7 @@
             await new Promise((resolve) => setTimeout(resolve, 1000)); // Forzar 1s de carga
 
             const response = await fetch(
-<<<<<<< Updated upstream
               `http://127.0.0.1:3000/api/reports/search?query=${encodeURIComponent(query)}`,
-=======
-              `https://127.0.0.1:3000/api/reports/search?query=${encodeURIComponent(query)}`,
->>>>>>> Stashed changes
               {
                 method: 'GET',
                 credentials: 'include',
@@ -79,11 +75,7 @@
             const checkDomainStatus = async (domain) => {
               try {
                 const res = await fetch(
-<<<<<<< Updated upstream
                   `http://127.0.0.1:3000/api/check-domain?domain=${encodeURIComponent(domain)}`
-=======
-                  `https://127.0.0.1:3000/api/check-domain?domain=${encodeURIComponent(domain)}`
->>>>>>> Stashed changes
                 );
                 const data = await res.json();
                 return data.status;
