@@ -63,29 +63,6 @@
   document.addEventListener('DOMContentLoaded', async function () {
     const { cardio } = await import('ldrs');
     cardio.register();
-    let csrfToken = '';
-
-    const fetchCSRFToken = async () => {
-      try {
-        const response = await fetch('http://127.0.0.1:3000/api/csrf-token', {
-          method: 'GET',
-          credentials: 'include',
-        });
-
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-
-        const data = await response.json();
-        csrfToken = data.csrfToken;
-        console.log('CSRF Token fetched:', csrfToken); // Debugging
-      } catch (error) {
-        console.error('Error fetching CSRF token:', error);
-      }
-    };
-
-    await fetchCSRFToken();
-
     const reportarButton = document.getElementById('reportar-button');
     const volverBuscadorButton = document.getElementById('volver-buscador');
     const volverInicioButton = document.getElementById('volver-inicio');
@@ -132,19 +109,6 @@
           texto,
         };
 
-        // Obtener el token CSRF desde las cookies
-        const cookie = document.cookie
-          .split('; ')
-          .find((row) => row.startsWith('XSRF-TOKEN='));
-        console.log('Cookies:', document.cookie); // Debugging
-        if (!cookie) {
-          console.error('CSRF token not found in cookies'); // Debugging
-          return;
-        }
-
-        const csrfToken = cookie.split('=')[1];
-        console.log('CSRF token from cookies:', csrfToken); // Debugging
-
         try {
           formularioContainer.classList.add('hidden');
           loaderContainer.classList.remove('hidden');
@@ -161,7 +125,6 @@
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
-              'CSRF-Token': csrfToken, // Enviar el token CSRF en el encabezado
             },
             credentials: 'include', // Asegúrate de enviar cookies con la solicitud
             body: JSON.stringify(data),

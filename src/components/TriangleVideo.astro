@@ -1,0 +1,46 @@
+<div
+  class='absolute inset-0 w-full h-screen flex justify-center items-center overflow-hidden -z-10 opacity:'
+>
+  <video
+    src='/assets/video.mp4'
+    autoplay
+    preload='auto'
+    playsinline
+    loop
+    muted
+    class='w-full h-screen object-cover object-bottom z-10 animate-fade animate-duration-[500ms]'
+    style='clip-path: polygon(0 0, 100% 0, 100% 70%, 50% 90%, 0 70%); opacity: 0.1;'
+  ></video>
+  <div
+    class='absolute top-2/3 w-full h-screen bg-transparent -z-40 animate-ease-in-out animate-fade animate-duration-[2000ms] backdrop-filter backdrop-blur-lg'
+    style='clip-path: polygon(0 0, 100% 0, 100% 70%, 50% 90%, 0 70%);'
+  >
+  </div>
+</div>
+
+<style is:global>
+  @keyframes fade {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  .animate-fade {
+    animation: fade 500ms ease-in-out;
+  }
+
+  .animate-duration-[2000ms] {
+    animation-duration: 2000ms;
+  }
+
+  .backdrop-filter {
+    backdrop-filter: blur(10px);
+  }
+
+  .backdrop-blur-lg {
+    backdrop-filter: blur(10px);
+  }
+</style>
